@@ -122,14 +122,9 @@ export default function App() {
         What do you want to create?
       </h2>
 
-      <div className="grid grid-cols-3 gap-8">
-
-        <div className="bg-[#1A1A2E] p-6 rounded-2xl text-center hover:shadow-[0_0_15px_#712FDE] transition">
-          <img
-        src="/resume.png"  // 👉 YOU will add your image in public folder
-        alt="resume"
-        className="w-[500px] rounded-xl"
-      />
+      <div className="grid grid-cols-3 gap-8 mt-20">
+        <div className="bg-[#1A1A2E] p-6 rounded-2xl h-64 text-center hover:shadow-[0_0_15px_#712FDE] transition">
+        
           <h3 className="text-lg mb-2">Resume</h3>
           <p className="text-gray-400">Create professional resume</p>
         </div>
@@ -159,7 +154,7 @@ export default function App() {
     </div>
 
     {/* FAQ SECTION */}
-    <div className="px-16 py-20 bg-[#1A1A2E]">
+    <div className="px-16 py-20 bg-[#black]">
 
   <h2 className="text-2xl mb-8 text-[#712FDE]">FAQs</h2>
 
