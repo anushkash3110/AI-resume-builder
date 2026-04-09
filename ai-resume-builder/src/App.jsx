@@ -9,7 +9,7 @@ function FAQItem({ question, answer }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="bg-[#0F0F1A] p-5 rounded-xl border border-gray-700">
+    <div className="bg-[#0F0F1A]  h-20 p-5 rounded-xl border border-gray-700">
       <div
         className="flex justify-between items-center cursor-pointer"
         onClick={() => setOpen(!open)}
@@ -60,7 +60,7 @@ export default function App() {
 
     {/* Navbar */}
     <div className="flex justify-between items-center px-10 py-4 bg-[#1A1A2E] shadow-md mb-14">
-      <h1 className="text-xl font-semibold text-[#712FDE]">ResumoAI</h1>
+      <h1 className="text-xl font-semibold text-[#712FDE]">Resumo</h1>
 
       <div className="flex items-center gap-10 text-sm font-medium">
         <button className="hover:text-[#712FDE] transition duration-200">Home</button>
@@ -83,7 +83,7 @@ export default function App() {
 
       {/* LEFT IMAGE */}
       <img
-        src="/resume.png"  // 👉 YOU will add your image in public folder
+        src="/resume.png"  // YOU will add your image in public folder
         alt="resume"
         className="w-[500px] rounded-xl"
       />
@@ -92,7 +92,7 @@ export default function App() {
       <div className="max-w-xl">
 
         <h1 className="text-6xl font-bold mb-12">
-          Welcome to <span className="text-[#712FDE]">ResumoAI</span>
+          Welcome to <span className="text-[#712FDE]">Resumo</span>
         </h1>
 
         <p className="text-2xl text-white-400 font-light mb-6">
@@ -116,42 +116,58 @@ export default function App() {
     </div>
 
     {/* OPTIONS SECTION */}
-    <div id="options" className="px-16 py-16 mt-40 bg-[#1A1A2E]">
+    <div id="options" className="px-16 py-24 bg-black mt-10">
 
-      <h2 className="text-4xl mb-10 text-[#712FDE] font-semibold">
-        What do you want to create?
-      </h2>
+  {/* Title */}
+  <h2 className="text-3xl text-center mb-12 font-semibold text-[#712FDE]">
+    What do you want to create?
+  </h2>
 
-      <div className="grid grid-cols-3 gap-8 mt-20">
-        <div className="bg-[#1A1A2E] p-6 rounded-2xl h-64 text-center hover:shadow-[0_0_15px_#712FDE] transition">
-        
-          <h3 className="text-lg mb-2">Resume</h3>
-          <p className="text-gray-400">Create professional resume</p>
-        </div>
+  {/* Grid */}
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
 
-        <div className="bg-[#1A1A2E] p-6 rounded-2xl text-center hover:shadow-[0_0_15px_#712FDE] transition">
-          <img
-        src="/resume.png"  // 👉 YOU will add your image in public folder
+    {/* Resume */}
+    <div className="text-center group">
+      <img
+        src="/resume.png"
         alt="resume"
-        className="w-[500px] rounded-xl"
-      />
-          <h3 className="text-lg mb-2">Cover Letter</h3>
-          <p className="text-gray-400">Generate cover letter</p>
-        </div>
-
-        <div className="bg-[#1A1A2E] p-6 rounded-2xl text-center hover:shadow-[0_0_15px_#712FDE] transition">
-          <img
-        src="/resume.png"  // 👉 YOU will add your image in public folder
-        alt="resume"
-        className="w-[500px] rounded-xl"
+        className="w-full h-[220px] object-cover rounded-xl mb-4 transition group-hover:shadow-[0_0_20px_#DEC749]"
       />
 
-          <h3 className="text-lg mb-2">Resume Website</h3>
-          <p className="text-gray-400">Convert resume into website</p>
-        </div>
-
-      </div>
+      <button className="mt-2 px-6 py-2 border border-[#DEC749] rounded-lg hover:bg-[#DEC749] hover:text-black transition">
+        Resume
+      </button>
     </div>
+
+    {/* Cover Letter */}
+    <div className="text-center group">
+      <img
+        src="/cover.png"
+        alt="cover letter"
+        className="w-full h-[220px] object-cover rounded-xl mb-4 transition group-hover:shadow-[0_0_20px_#DEC749]"
+      />
+
+      <button className="mt-2 px-6 py-2 border border-[#DEC749] rounded-lg hover:bg-[#DEC749] hover:text-black transition">
+        Cover Letter
+      </button>
+    </div>
+
+    {/* Website */}
+    <div className="text-center group">
+      <img
+        src="/website.png"
+        alt="website"
+        className="w-full h-[220px] object-cover rounded-xl mb-4 transition group-hover:shadow-[0_0_20px_#DEC749]"
+      />
+
+      <button className="mt-2 px-6 py-2 border border-[#DEC749] rounded-lg hover:bg-[#DEC749] hover:text-black transition">
+        Resume Website
+      </button>
+    </div>
+
+  </div>
+
+</div>
 
     {/* FAQ SECTION */}
     <div className="px-16 py-20 bg-[#black]">
@@ -185,24 +201,24 @@ export default function App() {
 </div>
 
     {/* ABOUT / FOOTER */}
-    <div className="px-16 py-10 text-sm text-gray-400">
+    <div className="px-16 py-10 text-sm bg-black text-gray-400">
 
       <h3 className="text-[#712FDE] mb-3">About</h3>
 
       <p>
-        ResumeAI helps users build professional resumes using AI technology.
+        Resumo helps users build professional resumes, cover letters, and resume websites using AI technology.
       </p>
 
       <p className="mt-3">
-        📍 Office: Bhopal, India  
+        Office: Bhopal, India  
       </p>
 
       <p>
-        📧 Email: support@resumeai.com  
+        Email: support@resumo.com  
       </p>
 
       <p className="mt-4">
-        © 2026 ResumeAI. All rights reserved.
+        © 2026 Resumo. All rights reserved.
       </p>
 
     </div>
