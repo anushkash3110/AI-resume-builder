@@ -1,4 +1,8 @@
+import { useState } from "react";
+
 export default function TemplateSelector({ type, setScreen }) {
+
+  const [showPremiumModal, setShowPremiumModal] = useState(false);
 
   // Scroll function
   const scrollToSection = (id) => {
@@ -14,7 +18,7 @@ export default function TemplateSelector({ type, setScreen }) {
     if (type === "website") return "Website Templates";
   };
 
-  // Templates Data (6 each)
+  // Templates Data
   const templates = {
     resume: [
       { name: "Classic", img: "/resume.png", paid: false },
@@ -109,18 +113,77 @@ export default function TemplateSelector({ type, setScreen }) {
               </h3>
 
               <button
-               onClick={() => setScreen("builder")}
-               className="w-full py-2 rounded-lg bg-[#712FDE] hover:bg-[#5a24b8] transition"
+                onClick={() => {
+                  if (template.paid) {
+                    setShowPremiumModal(true);
+                  } else {
+                    setScreen("builder");
+                  }
+                }}
+                className="w-full py-2 rounded-lg bg-[#712FDE] hover:bg-[#5a24b8] transition shadow-md hover:shadow-[0_0_15px_#712FDE]"
               >
-               {template.paid ? "Unlock Premium" : "Use Template"}
+                {template.paid ? "Unlock Premium" : "Use Template"}
               </button>
-        
+
             </div>
           ))}
 
         </div>
 
       </div>
+
+      {/* ✅ PREMIUM MODAL (OUTSIDE MAP) */}
+      {showPremiumModal && (
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
+
+          <div className="bg-[#1A1A2E] p-8 rounded-2xl w-[90%] max-w-md shadow-lg">
+
+            <h2 className="text-xl font-semibold mb-4 text-[#712FDE]">
+              Unlock Premium Template
+            </h2>
+
+            <p className="text-gray-400 mb-6">
+              Get access to premium templates by signing in and making a one-time payment of ₹200.
+            </p>
+
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="w-full p-3 mb-4 rounded-lg bg-[#0F0F1A] border border-gray-700"
+            />
+
+            <input
+              type="password"
+              placeholder="Enter password"
+              className="w-full p-3 mb-6 rounded-lg bg-[#0F0F1A] border border-gray-700"
+            />
+
+            <div className="flex gap-4">
+
+              <button
+                onClick={() => {
+                  alert("Payment Successful");
+                  setShowPremiumModal(false);
+                  setScreen("builder");
+                }}
+                className="flex-1 bg-[#712FDE] py-2 rounded-lg hover:bg-[#5a24b8]"
+              >
+                Pay ₹200
+              </button>
+
+              <button
+                onClick={() => setShowPremiumModal(false)}
+                className="flex-1 border border-gray-500 py-2 rounded-lg"
+              >
+                Cancel
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+      )}
 
       {/* About Section */}
       <div id="about" className="px-6 md:px-16 py-16 text-gray-400 bg-black">
