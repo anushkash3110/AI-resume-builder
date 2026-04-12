@@ -3,6 +3,12 @@ import FAQItem from "./FAQItem";
 
 export default function LandingPage({ setScreen, setType }) {
 
+  const scrollToSection = (id) => {
+  document.getElementById(id)?.scrollIntoView({
+    behavior: "smooth",
+  });
+};
+
 
   return (
     <div className="min-h-screen bg-[#0F0F1A] text-white flex flex-col">
@@ -12,9 +18,25 @@ export default function LandingPage({ setScreen, setType }) {
       <h1 className="text-xl font-semibold text-[#712FDE]">Resumo</h1>
 
       <div className="flex items-center gap-10 text-sm font-medium">
-        <button className="hover:text-[#712FDE] transition duration-200">Home</button>
-        <button className="hover:text-[#712FDE] transition duration-200">About</button>
-        <button className="hover:text-[#712FDE] transition duration-200">FAQs</button>
+        
+        <button 
+          onClick={() => scrollToSection("home")}
+          className="hover:text-[#712FDE] transition duration-200">
+          Home
+          </button>
+
+        <button 
+          onClick={() => scrollToSection("about")}
+          className="hover:text-[#712FDE] transition duration-200">
+          About
+          </button>
+
+        <button 
+          onClick={() => scrollToSection("faq")}
+          className="hover:text-[#712FDE] transition duration-200">
+          FAQs
+          </button>
+
       </div>
 
       <div className="flex gap-4">
@@ -28,7 +50,7 @@ export default function LandingPage({ setScreen, setType }) {
     </div>
 
     {/* HERO SECTION */}
-    <div className="flex items-center justify-between px-16 py-16 gap-20">
+    <div id="home" className="flex items-center justify-between px-16 py-16 gap-20">
 
       {/* LEFT IMAGE */}
       <img
@@ -134,7 +156,7 @@ export default function LandingPage({ setScreen, setType }) {
 </div>
 
     {/* FAQ SECTION */}
-    <div className="px-16 py-20 bg-black">
+    <div id="faq" className="px-16 py-20 bg-black">
   <h2 className="text-2xl mb-8 text-[#712FDE]">FAQs</h2>
 
   <div className="space-y-4">
@@ -164,7 +186,7 @@ export default function LandingPage({ setScreen, setType }) {
 </div>
 
     {/* ABOUT / FOOTER */}
-    <div className="px-16 py-10 text-sm bg-black text-gray-400">
+    <div id="about" className="px-16 py-10 text-sm bg-black text-gray-400">
 
       <h3 className="text-[#712FDE] mb-3">About</h3>
 
