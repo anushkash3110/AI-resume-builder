@@ -108,10 +108,13 @@ export default function TemplateSelector({ type, setScreen }) {
                 {template.name}
               </h3>
 
-              <button className="w-full py-2 rounded-lg bg-[#712FDE] hover:bg-[#5a24b8] transition shadow-md hover:shadow-[0_0_15px_#712FDE]">
-                {template.paid ? "Unlock Premium" : "Use Template"}
+              <button
+               onClick={() => setScreen("builder")}
+               className="w-full py-2 rounded-lg bg-[#712FDE] hover:bg-[#5a24b8] transition"
+              >
+               {template.paid ? "Unlock Premium" : "Use Template"}
               </button>
-
+        
             </div>
           ))}
 

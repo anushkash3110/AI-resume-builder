@@ -1,6 +1,8 @@
 import { useState } from "react";
 import LandingPage from "./LandingPage.jsx";
 import TemplatesPage from "./TemplateSelector";
+import BuilderPage from "./BuilderPage.jsx";
+import FAQItem from "./FAQItem.jsx";
 
 export default function App() {
   const [screen, setScreen] = useState("home");
@@ -15,6 +17,12 @@ export default function App() {
       {screen === "templates" && (
         <TemplatesPage type={type} setScreen={setScreen} />
       )}
+
+      {screen === "builder" && (
+       <BuilderPage setScreen={setScreen} />
+      )}
+
     </>
+    
   );
 }
