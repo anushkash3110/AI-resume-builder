@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaUser, FaEnvelope, FaTools, FaGraduationCap, FaCheck } from "react-icons/fa";
+import { FaUser, FaEnvelope, FaTools, FaGraduationCap, FaBriefcase, FaCheck } from "react-icons/fa";
 
 export default function BuilderPage({ setScreen }) {
 
@@ -10,9 +10,8 @@ export default function BuilderPage({ setScreen }) {
     email: "",
     skills: "",
     education: "",
+    experience: "",
   });
-
-  const [showResume, setShowResume] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -21,12 +20,13 @@ export default function BuilderPage({ setScreen }) {
     });
   };
 
-  // Step validation
+  // ✅ Track completion
   const isStepComplete = (step) => {
-    if (step === 1) return formData.name !== "";
-    if (step === 2) return formData.email !== "";
-    if (step === 3) return formData.skills !== "";
-    if (step === 4) return formData.education !== "";
+    if (step === 1) return formData.name.trim() !== "";
+    if (step === 2) return formData.email.trim() !== "";
+    if (step === 3) return formData.skills.trim() !== "";
+    if (step === 4) return formData.education.trim() !== "";
+    if (step === 5) return formData.experience.trim() !== "";
   };
 
   const steps = [
@@ -34,6 +34,7 @@ export default function BuilderPage({ setScreen }) {
     { id: 2, label: "Contact", icon: <FaEnvelope /> },
     { id: 3, label: "Skills", icon: <FaTools /> },
     { id: 4, label: "Education", icon: <FaGraduationCap /> },
+    { id: 5, label: "Experience", icon: <FaBriefcase /> },
   ];
 
   return (
@@ -49,111 +50,136 @@ export default function BuilderPage({ setScreen }) {
         </h1>
 
         <button
-          onClick={() => setScreen("home")}
+          onClick={() => setScreen("templates")}
           className="hover:text-[#712FDE]"
         >
-          Home
+          Templates
         </button>
       </div>
 
-      {!showResume ? (
-        <div className="flex flex-col md:flex-row p-6 md:p-16 gap-10">
+      {/* Layout */}
+      <div className="flex flex-col md:flex-row p-6 md:p-16 gap-10">
 
-          {/* LEFT: Steps */}
-          <div className="md:w-1/3 space-y-6">
+        {/* 🔥 LEFT: STEPS WITH ICONS */}
+        <div className="md:w-1/3 space-y-4">
 
-            {steps.map((s) => (
-              <div
-                key={s.id}
-                onClick={() => setStep(s.id)}
-                className={`flex items-center gap-4 p-4 rounded-xl cursor-pointer transition 
-                  ${step === s.id ? "bg-[#712FDE]" : "bg-[#1A1A2E]"}`}
+          {steps.map((s) => (
+            <div
+              key={s.id}
+              onClick={() => setStep(s.id)}
+              className={`flex items-center gap-4 p-4 rounded-xl cursor-pointer transition
+                ${step === s.id ? "bg-[#712FDE]" : "bg-[#1A1A2E]"}`}
+            >
+
+              {/* Icon */}
+              <div className="text-lg">{s.icon}</div>
+
+              {/* Label */}
+              <span>{s.label}</span>
+
+              {/* Tick */}
+              {isStepComplete(s.id) && (
+                <FaCheck className="ml-auto text-green-400" />
+              )}
+
+            </div>
+          ))}
+
+        </div>
+
+        {/* 🔥 RIGHT: FORM */}
+        <div className="md:w-2/3 bg-[#1A1A2E] p-8 rounded-2xl">
+
+          <h2 className="text-xl mb-6 text-[#712FDE]">
+            Step {step}: {steps[step - 1].label}
+          </h2>
+
+          {/* Inputs */}
+          {step === 1 && (
+            <input
+              name="name"
+              placeholder="Full Name"
+              onChange={handleChange}
+              className="w-full p-3 rounded-lg bg-[#0F0F1A] border border-gray-700"
+            />
+          )}
+
+          {step === 2 && (
+            <input
+              name="email"
+              placeholder="Email"
+              onChange={handleChange}
+              className="w-full p-3 rounded-lg bg-[#0F0F1A] border border-gray-700"
+            />
+          )}
+
+          {step === 3 && (
+            <input
+              name="skills"
+              placeholder="Skills"
+              onChange={handleChange}
+              className="w-full p-3 rounded-lg bg-[#0F0F1A] border border-gray-700"
+            />
+          )}
+
+          {step === 4 && (
+            <input
+              name="education"
+              placeholder="Education"
+              onChange={handleChange}
+              className="w-full p-3 rounded-lg bg-[#0F0F1A] border border-gray-700"
+            />
+          )}
+
+          {step === 5 && (
+            <textarea
+              name="experience"
+              placeholder="Experience"
+              onChange={handleChange}
+              className="w-full p-3 rounded-lg bg-[#0F0F1A] border border-gray-700"
+            />
+          )}
+
+          {/* Buttons */}
+          <div className="mt-6 flex justify-between">
+
+            {step > 1 && (
+              <button
+                onClick={() => setStep(step - 1)}
+                className="px-4 py-2 bg-gray-700 rounded-lg"
               >
-                <div className="text-lg">{s.icon}</div>
-
-                <span>{s.label}</span>
-
-                {/* Tick */}
-                {isStepComplete(s.id) && (
-                  <FaCheck className="ml-auto text-green-400" />
-                )}
-              </div>
-            ))}
-
-          </div>
-
-          {/* RIGHT: Form */}
-          <div className="md:w-2/3 bg-[#1A1A2E] p-8 rounded-2xl">
-
-            <h2 className="text-xl mb-6 text-[#712FDE]">
-              Step {step}
-            </h2>
-
-            {step === 1 && (
-              <input
-                type="text"
-                name="name"
-                placeholder="Enter your name"
-                onChange={handleChange}
-                className="w-full p-3 rounded-lg bg-[#0F0F1A] border border-gray-700"
-              />
+                Back
+              </button>
             )}
 
-            {step === 2 && (
-              <input
-                type="email"
-                name="email"
-                placeholder="Enter your email"
-                onChange={handleChange}
-                className="w-full p-3 rounded-lg bg-[#0F0F1A] border border-gray-700"
-              />
-            )}
+            <div className="flex gap-4 ml-auto">
 
-            {step === 3 && (
-              <input
-                type="text"
-                name="skills"
-                placeholder="Enter skills"
-                onChange={handleChange}
-                className="w-full p-3 rounded-lg bg-[#0F0F1A] border border-gray-700"
-              />
-            )}
-
-            {step === 4 && (
-              <input
-                type="text"
-                name="education"
-                placeholder="Enter education"
-                onChange={handleChange}
-                className="w-full p-3 rounded-lg bg-[#0F0F1A] border border-gray-700"
-              />
-            )}
-
-            {/* Next Button */}
-            <div className="mt-6 flex justify-between">
-
-              {step > 1 && (
+              {/* Skip */}
+              {step < 5 && (
                 <button
-                  onClick={() => setStep(step - 1)}
-                  className="px-4 py-2 bg-gray-700 rounded-lg"
+                  onClick={() => setStep(step + 1)}
+                  className="px-4 py-2 border border-gray-500 rounded-lg"
                 >
-                  Back
+                  Skip
                 </button>
               )}
 
-              {step < 4 ? (
+              {/* Next / Finish */}
+              {step < 5 ? (
                 <button
                   onClick={() => setStep(step + 1)}
-                  className="ml-auto px-6 py-2 bg-[#712FDE] rounded-lg"
+                  disabled={!isStepComplete(step)}
+                  className={`px-6 py-2 rounded-lg ${
+                    isStepComplete(step)
+                      ? "bg-[#712FDE]"
+                      : "bg-gray-600 cursor-not-allowed"
+                  }`}
                 >
                   Next →
                 </button>
               ) : (
-                <button
-                  onClick={() => setShowResume(true)}
-                  className="ml-auto px-6 py-2 bg-[#712FDE] rounded-lg hover:bg-[#5a24b8]"
-                >
-                  Generate Resume
+                <button className="px-6 py-2 bg-[#712FDE] rounded-lg hover:bg-[#5a24b8]">
+                  Finish
                 </button>
               )}
 
@@ -162,30 +188,27 @@ export default function BuilderPage({ setScreen }) {
           </div>
 
         </div>
-      ) : (
 
-        /* Resume Output */
-        <div className="max-w-3xl mx-auto mt-10 bg-white text-black p-8 rounded-xl">
+        {/* 🔥 RIGHT PREVIEW */}
+        <div className="hidden lg:block md:w-1/2 bg-white text-black p-8 rounded-2xl">
 
-          <h1 className="text-2xl font-bold">{formData.name}</h1>
-          <p>{formData.email}</p>
+          <h1 className="text-2xl font-bold">
+            {formData.name || "Your Name"}
+          </h1>
+
+          <p>{formData.email || "your@email.com"}</p>
 
           <h2 className="mt-4 font-semibold">Skills</h2>
-          <p>{formData.skills}</p>
+          <p>{formData.skills || "..."}</p>
 
           <h2 className="mt-4 font-semibold">Education</h2>
-          <p>{formData.education}</p>
+          <p>{formData.education || "..."}</p>
+
+          <h2 className="mt-4 font-semibold">Experience</h2>
+          <p>{formData.experience || "..."}</p>
 
         </div>
 
-      )}
-
-      {/* ABOUT SECTION */}
-      <div className="mt-20 px-6 md:px-16 py-10 text-gray-400 bg-black">
-        <h3 className="text-[#712FDE] mb-3">About</h3>
-        <p>Resumo helps build resumes using AI.</p>
-        <p>Bhopal, India</p>
-        <p>support@resumo.com</p>
       </div>
 
     </div>
