@@ -7,6 +7,7 @@ export default function BuilderPage({ setScreen }) {
   const [step, setStep] = useState(1);
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState("classic");
 
   const [formData, setFormData] = useState({
     name: "",
@@ -23,6 +24,47 @@ export default function BuilderPage({ setScreen }) {
       [e.target.name]: e.target.value,
     });
   };
+
+  <div className="px-6 md:px-16 mb-6">
+  <h2 className="text-lg mb-3 text-[#712FDE]">Choose Template</h2>
+
+  <div className="flex gap-4">
+
+    <button
+      onClick={() => setSelectedTemplate("classic")}
+      className={`px-4 py-2 rounded-lg ${
+        selectedTemplate === "classic"
+          ? "bg-[#712FDE]"
+          : "bg-[#1A1A2E]"
+      }`}
+    >
+      Classic
+    </button>
+
+    <button
+      onClick={() => setSelectedTemplate("modern")}
+      className={`px-4 py-2 rounded-lg ${
+        selectedTemplate === "modern"
+          ? "bg-[#712FDE]"
+          : "bg-[#1A1A2E]"
+      }`}
+    >
+      Modern
+    </button>
+
+    <button
+      onClick={() => setSelectedTemplate("minimal")}
+      className={`px-4 py-2 rounded-lg ${
+        selectedTemplate === "minimal"
+          ? "bg-[#712FDE]"
+          : "bg-[#1A1A2E]"
+      }`}
+    >
+      Minimal
+    </button>
+
+  </div>
+</div>
 
   // 🔥 AI FUNCTION
   const generateFromPrompt = async () => {
@@ -93,8 +135,10 @@ export default function BuilderPage({ setScreen }) {
       <div className="px-6 md:px-16 mt-6">
         <div className="bg-[#1A1A2E] p-6 rounded-2xl mb-6">
 
-          <h2 className="text-lg mb-3 text-[#712FDE]">
-            Generate with AI ✨
+          <h2 className="text-lg mb-3 text-[#712FDE] group">
+            Generate with AI <span className="text-sm text-gray-500 group-hover:text-gray-300 transition">
+              (Describe yourself to generate a resume)
+            </span>
           </h2>
 
           <input
@@ -229,24 +273,67 @@ export default function BuilderPage({ setScreen }) {
         </div>
 
         {/* PREVIEW */}
-        <div className="hidden lg:block md:w-1/2 bg-white text-black p-8 rounded-2xl">
+        <div className="hidden lg:block md:w-1/2 p-8 rounded-2xl">
 
-          <h1 className="text-2xl font-bold">
-            {formData.name || "Your Name"}
-          </h1>
+  {selectedTemplate === "classic" && (
+    <div className="bg-white text-black p-6 rounded-xl shadow">
+      <h1 className="text-2xl font-bold">
+        {formData.name || "Your Name"}
+      </h1>
+      <p>{formData.email || "your@email.com"}</p>
 
-          <p>{formData.email || "your@email.com"}</p>
+      <h2 className="mt-4 font-semibold">Skills</h2>
+      <p>{formData.skills || "..."}</p>
 
-          <h2 className="mt-4 font-semibold">Skills</h2>
-          <p>{formData.skills || "..."}</p>
+      <h2 className="mt-4 font-semibold">Education</h2>
+      <p>{formData.education || "..."}</p>
 
-          <h2 className="mt-4 font-semibold">Education</h2>
-          <p>{formData.education || "..."}</p>
+      <h2 className="mt-4 font-semibold">Experience</h2>
+      <p>{formData.experience || "..."}</p>
+    </div>
+  )}
 
-          <h2 className="mt-4 font-semibold">Experience</h2>
-          <p>{formData.experience || "..."}</p>
+  {selectedTemplate === "modern" && (
+    <div className="bg-white text-black p-6 rounded-xl shadow flex">
 
-        </div>
+      <div className="w-1/3 bg-[#712FDE] text-white p-4 rounded-l-xl">
+        <h2 className="text-lg font-bold">{formData.name || "Your Name"}</h2>
+        <p className="text-sm">{formData.email}</p>
+      </div>
+
+      <div className="w-2/3 p-4">
+        <h3 className="font-semibold">Skills</h3>
+        <p>{formData.skills}</p>
+
+        <h3 className="mt-3 font-semibold">Education</h3>
+        <p>{formData.education}</p>
+
+        <h3 className="mt-3 font-semibold">Experience</h3>
+        <p>{formData.experience}</p>
+      </div>
+
+    </div>
+  )}
+
+  {selectedTemplate === "minimal" && (
+    <div className="bg-white text-black p-6 rounded-xl shadow">
+
+      <h1 className="text-xl font-semibold border-b pb-2">
+        {formData.name || "Your Name"}
+      </h1>
+
+      <p className="text-sm text-gray-600 mb-3">
+        {formData.email}
+      </p>
+
+      <p><strong>Skills:</strong> {formData.skills}</p>
+      <p><strong>Education:</strong> {formData.education}</p>
+      <p><strong>Experience:</strong> {formData.experience}</p>
+
+    </div>
+  )}
+
+</div>
 
       </div>
 
