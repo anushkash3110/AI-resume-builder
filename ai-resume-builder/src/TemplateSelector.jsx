@@ -1,33 +1,18 @@
 import { useState } from "react";
 
-export default function TemplateSelector({ setScreen, setSelectedTemplate }) {
+export default function TemplateSelector({
+  setScreen,
+  setSelectedTemplate,
+  isPremium,
+  setIsPremium,
+}) {
   const [showPremiumModal, setShowPremiumModal] = useState(false);
 
   const templates = [
-    {
-      name: "classic",
-      label: "Classic",
-      img: "/resume.png",
-      paid: false,
-    },
-    {
-      name: "modern",
-      label: "Modern",
-      img: "/resume.png",
-      paid: false,
-    },
-    {
-      name: "minimal",
-      label: "Minimal",
-      img: "/resume.png",
-      paid: false,
-    },
-    {
-      name: "premium",
-      label: "Premium Pro",
-      img: "/resume.png",
-      paid: true,
-    },
+    { name: "classic", label: "Classic", img: "/resume.png", paid: false },
+    { name: "modern", label: "Modern", img: "/resume.png", paid: false },
+    { name: "minimal", label: "Minimal", img: "/resume.png", paid: false },
+    { name: "premium", label: "Premium Pro", img: "/resume.png", paid: true },
   ];
 
   return (
@@ -40,15 +25,11 @@ export default function TemplateSelector({ setScreen, setSelectedTemplate }) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
         {templates.map((template) => (
-          <div
-            key={template.name}
-            className="bg-[#1A1A2E] p-4 rounded-xl"
-          >
+          <div key={template.name} className="bg-[#1A1A2E] p-4 rounded-xl">
 
-            {/* IMAGE */}
+            {/* Image */}
             <img
               src={template.img}
-              alt="template"
               className="rounded-lg mb-4 h-[200px] w-full object-cover"
             />
 
@@ -56,7 +37,7 @@ export default function TemplateSelector({ setScreen, setSelectedTemplate }) {
 
             <button
               onClick={() => {
-                if (template.paid) {
+                if (template.paid && !isPremium) {
                   setShowPremiumModal(true);
                 } else {
                   setSelectedTemplate(template.name);
@@ -65,7 +46,9 @@ export default function TemplateSelector({ setScreen, setSelectedTemplate }) {
               }}
               className="w-full py-2 bg-[#712FDE] rounded-lg"
             >
-              {template.paid ? "Unlock Premium" : "Use Template"}
+              {template.paid && !isPremium
+                ? "Unlock Premium"
+                : "Use Template"}
             </button>
 
           </div>
@@ -87,9 +70,9 @@ export default function TemplateSelector({ setScreen, setSelectedTemplate }) {
 
             <button
               onClick={() => {
+                localStorage.setItem("premium", "true");
+                setIsPremium(true);
                 setShowPremiumModal(false);
-                setSelectedTemplate("premium");
-                setScreen("builder");
               }}
               className="w-full bg-[#712FDE] py-2 rounded-lg mb-2"
             >

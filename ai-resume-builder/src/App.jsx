@@ -5,8 +5,8 @@ import BuilderPage from "./pages/BuilderPage";
 
 export default function App() {
   const [screen, setScreen] = useState("home");
-  const [type, setType] = useState("");
-  const [selectedTemplate, setSelectedTemplate] = useState("");
+  const [selectedTemplate, setSelectedTemplate] = useState("classic");
+  const [type, setType] = useState("resume");
 
   return (
     <>
@@ -16,16 +16,17 @@ export default function App() {
 
       {screen === "templates" && (
         <TemplateSelector
-          type={type}
           setScreen={setScreen}
           setSelectedTemplate={setSelectedTemplate}
+          type={type}
         />
       )}
 
       {screen === "builder" && (
         <BuilderPage
-          setScreen={setScreen}
           selectedTemplate={selectedTemplate}
+          type={type}
+          setScreen={setScreen}
         />
       )}
     </>
