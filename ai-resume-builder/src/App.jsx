@@ -1,12 +1,12 @@
 import { useState } from "react";
-import LandingPage from "./LandingPage.jsx";
-import TemplatesPage from "./TemplateSelector";
-import BuilderPage from "./BuilderPage.jsx";
-import FAQItem from "./FAQItem.jsx";
+import LandingPage from "./pages/LandingPage";
+import TemplateSelector from "./pages/TemplateSelector";
+import BuilderPage from "./pages/BuilderPage";
 
 export default function App() {
   const [screen, setScreen] = useState("home");
   const [type, setType] = useState("");
+  const [selectedTemplate, setSelectedTemplate] = useState("");
 
   return (
     <>
@@ -15,14 +15,19 @@ export default function App() {
       )}
 
       {screen === "templates" && (
-        <TemplatesPage type={type} setScreen={setScreen} />
+        <TemplateSelector
+          type={type}
+          setScreen={setScreen}
+          setSelectedTemplate={setSelectedTemplate}
+        />
       )}
 
       {screen === "builder" && (
-       <BuilderPage setScreen={setScreen} />
+        <BuilderPage
+          setScreen={setScreen}
+          selectedTemplate={selectedTemplate}
+        />
       )}
-
     </>
-    
   );
 }
