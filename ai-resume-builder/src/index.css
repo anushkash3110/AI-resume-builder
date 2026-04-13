@@ -5,3 +5,28 @@
 body {
   font-family: 'Inter', sans-serif;
 }
+  
+  /* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+ 
+/* Print: hide everything except the resume card */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #resume-output,
+  #resume-output * {
+    visibility: visible;
+  }
+  #resume-output {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 40px !important;
+  }
+}
