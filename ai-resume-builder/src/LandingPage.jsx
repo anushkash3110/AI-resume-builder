@@ -45,11 +45,11 @@ export default function LandingPage({ setScreen, setType }) {
       </nav>
 
       {/* HERO SECTION */}
-      <div id="home" className="flex items-center justify-between px-16 py-20 gap-20">
+      <div id="home" className="flex items-center justify-between px-16 py-20 gap-15">
 
         {/* LEFT IMAGE */}
         <img
-          src="/resume.png"
+          src="/Resumomainpage.png"
           alt="resume preview"
           className="w-[460px] rounded-xl shadow-[0_0_40px_#712FDE55]"
         />
@@ -89,7 +89,7 @@ export default function LandingPage({ setScreen, setType }) {
           {/* Resume */}
           <div className="text-center group">
             <img
-              src="/resume.png"
+              src="/image.png"
               alt="resume"
               className="w-full h-[220px] object-cover rounded-xl mb-4 transition group-hover:shadow-[0_0_20px_#DEC749]"
             />
@@ -107,9 +107,9 @@ export default function LandingPage({ setScreen, setType }) {
           {/* Cover Letter */}
           <div className="text-center group">
             <img
-              src="/cover.png"
+              src="/coverL.png"
               alt="cover letter"
-              className="w-full h-[220px] object-cover rounded-xl mb-4 transition group-hover:shadow-[0_0_20px_#DEC749]"
+              className="w-full h-[220px] object-cover rounded-xl mb-4 transition group-hover:shadow-[0_0_20px_#DEC749] centered"
             />
             <button
               onClick={() => {
@@ -124,11 +124,14 @@ export default function LandingPage({ setScreen, setType }) {
 
           {/* Website */}
           <div className="text-center group">
-            <img
-              src="/website.png"
-              alt="resume website"
+            <video
+              src="/website.mp4"
+              autoPlay
+              loop
+              muted
               className="w-full h-[220px] object-cover rounded-xl mb-4 transition group-hover:shadow-[0_0_20px_#DEC749]"
             />
+
             <button
               onClick={() => {
                 setType("website");
