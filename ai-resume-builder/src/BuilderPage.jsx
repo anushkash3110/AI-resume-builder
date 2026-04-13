@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { FaUser, FaEnvelope, FaTools, FaGraduationCap, FaBriefcase, FaCheck } from "react-icons/fa";
+import axios from "axios";
 
 export default function BuilderPage({ setScreen }) {
 
   const [step, setStep] = useState(1);
+  const [prompt, setPrompt] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -13,11 +16,57 @@ export default function BuilderPage({ setScreen }) {
     experience: "",
   });
 
+  // Handle input
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  // 🔥 AI FUNCTION
+  const generateFromPrompt = async () => {
+    if (!prompt) return;
+
+    setLoading(true);
+
+    try {
+      const response = await axios.post(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          model: "gpt-4o-mini",
+          messages: [
+            {
+              role: "user",
+              content: `Create a resume from this: ${prompt}. Give short sections for skills, education and experience.`,
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const text = response.data.choices[0].message.content;
+
+      // Simple parsing (basic for now)
+      setFormData({
+        name: "AI Generated",
+        email: "ai@email.com",
+        skills: text.slice(0, 120),
+        education: "Generated Education",
+        experience: text.slice(120, 300),
+      });
+
+    } catch (error) {
+      console.error(error);
+      alert("Error connecting API");
+    }
+
+    setLoading(false);
   };
 
   // ✅ Track completion
@@ -40,6 +89,31 @@ export default function BuilderPage({ setScreen }) {
   return (
     <div className="min-h-screen bg-[#0F0F1A] text-white flex flex-col">
 
+      {/* 🔥 AI INPUT */}
+      <div className="px-6 md:px-16 mt-6">
+        <div className="bg-[#1A1A2E] p-6 rounded-2xl mb-6">
+
+          <h2 className="text-lg mb-3 text-[#712FDE]">
+            Generate with AI ✨
+          </h2>
+
+          <input
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            placeholder="Describe yourself..."
+            className="w-full p-3 rounded-lg bg-[#0F0F1A] border border-gray-700 mb-4"
+          />
+
+          <button
+            onClick={generateFromPrompt}
+            className="bg-[#712FDE] px-6 py-2 rounded-lg hover:bg-[#5a24b8]"
+          >
+            {loading ? "Generating..." : "Generate"}
+          </button>
+
+        </div>
+      </div>
+
       {/* Navbar */}
       <div className="flex justify-between items-center px-6 md:px-16 py-4 bg-[#1A1A2E] shadow-md">
         <h1
@@ -60,9 +134,8 @@ export default function BuilderPage({ setScreen }) {
       {/* Layout */}
       <div className="flex flex-col md:flex-row p-6 md:p-16 gap-10">
 
-        {/* 🔥 LEFT: STEPS WITH ICONS */}
+        {/* LEFT: STEPS */}
         <div className="md:w-1/3 space-y-4">
-
           {steps.map((s) => (
             <div
               key={s.id}
@@ -70,101 +143,67 @@ export default function BuilderPage({ setScreen }) {
               className={`flex items-center gap-4 p-4 rounded-xl cursor-pointer transition
                 ${step === s.id ? "bg-[#712FDE]" : "bg-[#1A1A2E]"}`}
             >
-
-              {/* Icon */}
-              <div className="text-lg">{s.icon}</div>
-
-              {/* Label */}
+              <div>{s.icon}</div>
               <span>{s.label}</span>
 
-              {/* Tick */}
               {isStepComplete(s.id) && (
                 <FaCheck className="ml-auto text-green-400" />
               )}
-
             </div>
           ))}
-
         </div>
 
-        {/* 🔥 RIGHT: FORM */}
+        {/* FORM */}
         <div className="md:w-2/3 bg-[#1A1A2E] p-8 rounded-2xl">
 
           <h2 className="text-xl mb-6 text-[#712FDE]">
             Step {step}: {steps[step - 1].label}
           </h2>
 
-          {/* Inputs */}
           {step === 1 && (
-            <input
-              name="name"
-              placeholder="Full Name"
-              onChange={handleChange}
-              className="w-full p-3 rounded-lg bg-[#0F0F1A] border border-gray-700"
-            />
+            <input name="name" placeholder="Full Name" onChange={handleChange}
+              className="w-full p-3 rounded-lg bg-[#0F0F1A] border border-gray-700" />
           )}
 
           {step === 2 && (
-            <input
-              name="email"
-              placeholder="Email"
-              onChange={handleChange}
-              className="w-full p-3 rounded-lg bg-[#0F0F1A] border border-gray-700"
-            />
+            <input name="email" placeholder="Email" onChange={handleChange}
+              className="w-full p-3 rounded-lg bg-[#0F0F1A] border border-gray-700" />
           )}
 
           {step === 3 && (
-            <input
-              name="skills"
-              placeholder="Skills"
-              onChange={handleChange}
-              className="w-full p-3 rounded-lg bg-[#0F0F1A] border border-gray-700"
-            />
+            <input name="skills" placeholder="Skills" onChange={handleChange}
+              className="w-full p-3 rounded-lg bg-[#0F0F1A] border border-gray-700" />
           )}
 
           {step === 4 && (
-            <input
-              name="education"
-              placeholder="Education"
-              onChange={handleChange}
-              className="w-full p-3 rounded-lg bg-[#0F0F1A] border border-gray-700"
-            />
+            <input name="education" placeholder="Education" onChange={handleChange}
+              className="w-full p-3 rounded-lg bg-[#0F0F1A] border border-gray-700" />
           )}
 
           {step === 5 && (
-            <textarea
-              name="experience"
-              placeholder="Experience"
-              onChange={handleChange}
-              className="w-full p-3 rounded-lg bg-[#0F0F1A] border border-gray-700"
-            />
+            <textarea name="experience" placeholder="Experience" onChange={handleChange}
+              className="w-full p-3 rounded-lg bg-[#0F0F1A] border border-gray-700" />
           )}
 
           {/* Buttons */}
           <div className="mt-6 flex justify-between">
 
             {step > 1 && (
-              <button
-                onClick={() => setStep(step - 1)}
-                className="px-4 py-2 bg-gray-700 rounded-lg"
-              >
+              <button onClick={() => setStep(step - 1)}
+                className="px-4 py-2 bg-gray-700 rounded-lg">
                 Back
               </button>
             )}
 
             <div className="flex gap-4 ml-auto">
 
-              {/* Skip */}
               {step < 5 && (
-                <button
-                  onClick={() => setStep(step + 1)}
-                  className="px-4 py-2 border border-gray-500 rounded-lg"
-                >
+                <button onClick={() => setStep(step + 1)}
+                  className="px-4 py-2 border border-gray-500 rounded-lg">
                   Skip
                 </button>
               )}
 
-              {/* Next / Finish */}
               {step < 5 ? (
                 <button
                   onClick={() => setStep(step + 1)}
@@ -189,7 +228,7 @@ export default function BuilderPage({ setScreen }) {
 
         </div>
 
-        {/* 🔥 RIGHT PREVIEW */}
+        {/* PREVIEW */}
         <div className="hidden lg:block md:w-1/2 bg-white text-black p-8 rounded-2xl">
 
           <h1 className="text-2xl font-bold">
