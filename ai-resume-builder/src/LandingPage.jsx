@@ -1,4 +1,4 @@
-import FAQItem from "../components/FAQItem";
+import FAQItem from "./FAQItem";
 
 export default function LandingPage({ setScreen, setType }) {
 

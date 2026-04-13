@@ -1,7 +1,7 @@
 import { useState } from "react";
-import LandingPage from "./pages/LandingPage";
-import TemplateSelector from "./pages/TemplateSelector";
-import BuilderPage from "./pages/BuilderPage";
+import LandingPage from "./LandingPage";
+import TemplateSelector from "./TemplateSelector";
+import BuilderPage from "./BuilderPage";
 
 export default function App() {
   const [screen, setScreen] = useState("home");

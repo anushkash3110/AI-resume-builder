@@ -96,7 +96,7 @@ If any field cannot be determined from the description, use an empty string "".`
     }
   };
 
-  // ─── FINAL RESUME VIEW ───────────────────────────────────────────────────
+  //FINAL RESUME VIEW 
   if (showResume) {
     return (
       <div className="min-h-screen bg-[#0F0F1A] flex flex-col items-center py-10 px-4">
